@@ -1,0 +1,107 @@
+<script type="text/javascript" >
+    $(document).ready(function() {
+     $.getJSON('/admin/sinavlargetir/').then(res => {
+        sinavListFunc(res);
+          });
+        });
+          function sinavListFunc(res){
+ $('#sinavList').html("");
+ z=0;
+       res.forEach(element => {
+         z++;
+           buttonOdemeIptal='<button type="button" class="btn btn-danger" onclick="sinavsil('+"'"+element._id+"'"+')" ><i class="bi bi-patch-minus"></i></button>';
+           classs='class="table-secondary"';
+           $('#sinavList').append('<tr '+classs+'><th scope="row">'+z+'</th><td><button class="btn btn-primary" data-id="'+element._id+'"  data-bs-toggle="modal" data-bs-target="#exampleModal">'+element.sinav+'</button></td><td>'+element.sinavtarih+'</td><td>'+buttonOdemeIptal+'</td></tr>');
+
+       });
+
+}
+
+function sinavsil(id){
+  $.get('/admin/sinavsil/'+id).then(res => {
+    sinavListFunc(res);
+    }); 
+}
+     
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+<style>
+.custom-file-button input[type=file] {
+margin-left: -2px !important;
+}
+
+.custom-file-button input[type=file]::-webkit-file-upload-button {
+display: none;
+}
+
+.custom-file-button input[type=file]::file-selector-button {
+display: none;
+}
+
+.custom-file-button:hover label {
+background-color: #dde0e3;
+cursor: pointer;
+}
+</style>
+
+ 
+<div class="container">
+         
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+   <h1 class="h2">Gider İşlemleri</h1>
+
+ </div>
+  <div class="row justify-content-md-center ">
+     
+      <div class="col col-lg-12">
+                 
+                    <form action="sinavlar" method="POST" enctype="multipart/form-data" class="was-validated">
+                        <div class="container py-3">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">Sınav Tarihini Giriniz</span>
+                            <input type="text" class="form-control" name="sinavtarih" id="tarih" placeholder="Sınav adı" aria-label="Sınav adı" aria-describedby="addon-wrapping">
+                          </div>
+                        </div>
+
+                        <div class="container py-3">
+                            <div class="input-group flex-nowrap">
+                                <span class="input-group-text" id="addon-wrapping">Sınav Adını Giriniz</span>
+                                <input type="text" class="form-control" name="sinavadi" placeholder="Sınav adı" aria-label="Sınav adı" aria-describedby="addon-wrapping">
+                              </div>
+                            </div>
+                          <div class="container py-3">
+
+                            <div class="input-group custom-file-button">
+                              <label class="input-group-text" for="inputGroupFile">Dosya Seçiniz</label>
+                              <input type="file" class="form-control" name="file" id="inputGroupFile">
+                            </div>
+                          
+                          </div>
+<button class="form-control" type="submit">YÜKLE</button>
+
+                    </form>
+
+               </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table" id="tableGider">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Sınav Adı</th>
+              <th scope="col">Tarih</th>
+            </tr>
+          </thead>
+          <tbody id="sinavList">
+     
+          </tbody>
+        </table>
+      </div>
+
+</div>
+</div>

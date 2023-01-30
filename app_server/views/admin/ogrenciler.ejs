@@ -1,0 +1,577 @@
+
+     
+     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Öğrenci Listesi</h1>
+
+    </div>
+    <div class="table-responsive">
+
+
+     
+
+
+<table id="tabletest" class="display " style="width:100%">
+  <thead>
+    <tr>
+      <th>Sıra</th>
+      <th>Sınıf</th>
+      <th>TC</th>
+      <th>Ad</th>
+        <th>Soyad</th>
+        <th>Durum</th>
+        <th>Ayar</th>
+      </tr>
+</thead></table>
+<script type="text/javascript" >
+
+$(document).ready(function() {
+$('#tabletest').DataTable( {
+  "language": {
+          "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+      },
+  "processing": true,
+  "serverSide": true,
+  "stateSave": true,
+  "ajax": {
+    "url": "/admin/ogrenciliste",
+    "dataSrc": "data"
+  },
+    "orderable": false,
+      "order": [ 0, 'asc' ],
+      "aoColumnDefs": [
+        { "bSortable": false, "aTargets": [3,4] } 
+        ],
+
+      
+      'scrollCollapse': true,
+
+      'lengthMenu':[[5,10,20],[5,10,20]],
+    //  searching:true,
+   //   sort:false,
+  "columns": [
+   { "data" : "_id" },
+    { "data" : "sinif" },
+    { "data" : "tc" },
+    { "data" : "name" },
+    { "data" : "surname" },
+    { "data" : "durum" },
+   {"defaultContent":'<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Detay</button>'}
+   
+  ]
+});
+
+$('#tabletest').on( 'click', 'button', function () {
+     let  tc = $(this).closest("tr").find("td")[2].innerHTML ;
+       $.getJSON('/admin/ogrencigetir/'+tc).then(res => {
+        kisiselFunc(res);
+        odemelerFunc(res);
+  });
+
+  $.getJSON('/admin/ogrencisinavlar/'+tc).then(res => {
+        sinavlarFunc(res,tc);
+  });
+  } );
+
+  $.getJSON('/admin/siniflargetir/').then(res => {
+    sinifListFunc(res); 
+       });
+
+  $('#odemegir').click(function () {
+      var formVeri=$("#odemegirForm").serialize(); 
+       $.post('/admin/odemegir/',formVeri).then(res => {
+        odemelerFunc(res);
+  });
+  });
+
+
+  $('#save').click(function () {
+     var datas = document.getElementById('id').value;
+     //var formVeri=JSON.stringify( $("#userChange").serializeArray() ); 
+      var formVeri=$("#userChange").serialize(); 
+       $.post('/admin/ogrencidegis/'+datas,formVeri).then(res => {
+      
+    $('#tabletest').DataTable().ajax.reload(null, false);
+  });
+
+  });
+
+
+
+  $('#delete').click(function () {
+   if(confirm("Öğrenci Bilgileri Silinecek Geri Dönülemez, Onaylıyormusunuz?")){
+   var datas = document.getElementById('ogrencitc').value;
+       $.get('/admin/ogrencisil/'+datas).then(res => {
+    $('#tabletest').DataTable().ajax.reload(null, false);
+	});
+	}
+     else{ return false; }
+  
+  });
+
+
+  $('#duzenle').click(function () {
+
+    var formVeri=$("#duzenleForm").serialize(); 
+     var datas = document.getElementById('ogrencitc').value;
+       $.post('/admin/ogrenciduzenle/'+datas,formVeri).then(res => {
+    $('#tabletest').DataTable().ajax.reload(null, false);
+  });
+  });
+
+}); 
+
+
+function sinifListFunc(res){
+$('#sinif').html("");
+
+option='<option value=""></option>';
+
+    res.forEach(element => {
+       option=option+'<option value="'+element.sinifadi+'">'+element.sinifadi+'</option>';
+
+    });
+    $('#sinif').html(option);
+
+}
+
+function odemesils(tc,id,vals){
+$.get('/admin/odemesil/'+tc+"/"+id+"/"+vals).then(res => {
+  odemelerFunc(res);
+  }); 
+}
+
+
+function sinavlarFunc(res,tc){
+$('#sinavlar').html("");
+console.log(res);
+z=0;
+
+
+res.forEach(element => {
+z++;
+let tablonot="";
+
+      
+
+
+                let veri=[];
+for(i=0; i<element.sinavlar.length;i++){
+  for (var k in element.sinavlar[i]){
+  if (element.sinavlar[i].hasOwnProperty(k)) {
+      if(element.sinavlar[i]["tc"]==tc)
+      {
+
+        veri[k]=element.sinavlar[i][k];
+
+      }
+      // tablonot=tablonot+"<tr><td>"+k+"</td><td>"+element.sinavlar[i][k]+"</td></td>";
+
+  }
+}
+  
+
+}
+tablobaslik = '<div class="row">  '+    
+  '<div class="col-lg-3"></div>'+
+  '<div class="col-lg-6"> '+
+    ' <table class="table border border-success">'+
+      '  <tr><td>Adı Soyadı: </td><td>'+veri["adiSoyadi"]+'</td></tr>'+
+      '  <tr><td>TC Kimlik: </td><td >'+veri["tc"]+'</td></tr>'+
+      '    <tr><td>Sınıf: </td><td >'+veri["sinifSube"]+'</td></tr>'+
+      '    <tr><td>Toplam Doğru: </td><td >'+veri["toplamD"]+'</td></tr>'+
+      '    <tr><td>Toplam Yanlış: </td><td >'+veri["toplamY"]+'</td></tr>'+
+      '    <tr><td>Toplam Net: </td><td >'+veri["toplam"]+'</td></tr>'+
+      '    <tr><td>Lgs Puan: </td><td >'+veri["lgspuan"]+'</td></tr>'+
+      '    <tr><td>Lgs Sınıf: </td><td >'+veri["lgssinif"]+'</td></tr>'+
+      '    <tr><td>lgs Kurum: </td><td >'+veri["lgskurum"]+'</td></tr>'+
+      '    <tr><td>lgs İlçe: </td><td >'+veri["lgsilce"]+'</td></tr>'+
+      '    <tr><td>lgs İl: </td><td >'+veri["lgsil"]+'</td></tr>'+
+      '    <tr><td>Lgs Genel: </td><td >'+veri["lgsgenel"]+'</td></tr>'+
+      '   </table>'+
+      '  </div>'+
+      '    <div class="col-lg-3"></div>'+
+      '    </div>';
+
+ tabloturkce = '<div class="col-lg-4">'+
+               '<table class="table border border-primary" >'+
+                ' <tr><td colspan="3" align="center">Türkçe</td></tr>'+
+                ' <tr><td>Doğru</td><td>Yanlış</td><td>Net</td></tr>'+
+                ' <tr><td>'+veri["turkceD"]+'</td><td>'+veri["turkceY"]+'</td><td>'+veri["turkce"]+'</td></tr>'+
+                ' </table>'+
+                ' </div>';
+
+                
+ tablotarih = '<div class="col-lg-4">'+
+               '<table class="table border border-primary" >'+
+                ' <tr><td colspan="3" align="center">Tarih</td></tr>'+
+                ' <tr><td>Doğru</td><td>Yanlış</td><td>Net</td></tr>'+
+                ' <tr><td>'+veri["tarihD"]+'</td><td>'+veri["tarihY"]+'</td><td>'+veri["tarih"]+'</td></tr>'+
+                ' </table>'+
+                ' </div>';
+                
+ tablodin = '<div class="col-lg-4">'+
+               '<table class="table border border-primary" >'+
+                ' <tr><td colspan="3" align="center">Din</td></tr>'+
+                ' <tr><td>Doğru</td><td>Yanlış</td><td>Net</td></tr>'+
+                ' <tr><td>'+veri["dinD"]+'</td><td>'+veri["dinY"]+'</td><td>'+veri["din"]+'</td></tr>'+
+                ' </table>'+
+                ' </div>';
+                
+ tabloingilizce = '<div class="col-lg-4">'+
+               '<table class="table border border-primary" >'+
+                ' <tr><td colspan="3" align="center">İngilizce</td></tr>'+
+                ' <tr><td>Doğru</td><td>Yanlış</td><td>Net</td></tr>'+
+                ' <tr><td>'+veri["ingilizceD"]+'</td><td>'+veri["ingilizceY"]+'</td><td>'+veri["ingilizce"]+'</td></tr>'+
+                ' </table>'+
+                ' </div>';
+                
+ tablomatematik = '<div class="col-lg-4">'+
+               '<table class="table border border-primary" >'+
+                ' <tr><td colspan="3" align="center">Matematik</td></tr>'+
+                ' <tr><td>Doğru</td><td>Yanlış</td><td>Net</td></tr>'+
+                ' <tr><td>'+veri["matematik"]+'</td><td>'+veri["matematikY"]+'</td><td>'+veri["matematik"]+'</td></tr>'+
+                ' </table>'+
+                ' </div>';
+                
+ tablofen = '<div class="col-lg-4">'+
+               '<table class="table border border-primary" >'+
+                ' <tr><td colspan="3" align="center">Fen</td></tr>'+
+                ' <tr><td>Doğru</td><td>Yanlış</td><td>Net</td></tr>'+
+                ' <tr><td>'+veri["fenD"]+'</td><td>'+veri["fenY"]+'</td><td>'+veri["fen"]+'</td></tr>'+
+                ' </table>'+
+                ' </div>';
+   turkceBasari= Math.round(((veri["turkce"]*100)/20));
+  tarihBasari= Math.round(((veri["tarih"]*100)/10));
+  dinBasari= Math.round(((veri["din"]*100)/10));
+  ingilizceBasari= Math.round(((veri["ingilizce"]*100)/10));
+  matematikBasari= Math.round(((veri["matematik"]*100)/20));
+  fenBasari= Math.round(((veri["fen"]*100)/20));
+
+
+//tablo='<table class="table">'+tablonot+'</table>';
+tablo=tablobaslik+'<div class="container"> <div class="row"> '+tabloturkce+tablotarih+tablodin+tablomatematik+tablofen+tabloingilizce +'</div></div>';
+
+$('#sinavlar').append('<tr ><th scope="row">'+z+'</th><td><button onclick="ackapa('+"'"+element._id+"'"+')">'+element.sinav+'</button></td><td>'+element.sinavtarih+'</td><td>%'+turkceBasari+'</td><td>%'+tarihBasari+'</td><td>%'+dinBasari+'</td><td>%'+ingilizceBasari+'</td><td>%'+matematikBasari+'</td><td>%'+fenBasari+'</td></tr>');
+$('#sinavlar').append('<tr  class="sinavlar" id="'+element._id+'"><td colspan="9">'+tablo+'</td></tr>');
+});
+$('.sinavlar').hide();
+}
+function ackapa(id) {
+var x = document.getElementById(id);
+if (x.style.display === "none") {
+  x.style.display = "";
+} else {
+  x.style.display = "none";
+}
+
+}
+
+function kisiselFunc(res){
+console.log(res);
+$('#nameHead').html(res.name + " "+res.surname);
+        $('#ogrencitc').val(res.tc);
+        $('#tc').val(res.tc);
+        $('#name').val(res.name);
+        $('#surname').val(res.surname);
+        $('#telefon').val(res.telefon);
+        $('#veli').val(res.veli);
+        $('#email').val(res.email);
+        $('#password').val(res.password);
+        $('#role').val(res.role);
+    if(res.role==""){
+    $('#roleDiv').html("");
+    }
+        
+        $('select[name=sinif]').val(res.sinif);
+}
+
+function odemelerFunc(res){
+  $('#odemeler').html("");
+  $('#yapilanodemeler').html("");
+
+  let yapilanodemelerToplam=0
+           z=0;
+           ziptal=0;
+     if(res.yapilanodemeler.length>0)
+          {
+        res.yapilanodemeler.forEach(element => {
+
+          z++;
+          zaman=new Date(element.odemetarihi);
+          zaman= zaman.toLocaleDateString('en-GB', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).replace(/\./g, '/'); 
+         if(element.durum==false){
+           z--;
+           ziptal++;
+            buttonOdemeIptal='<button type="button" class="btn btn-danger" onclick="odemesils('+"'"+res.tc+"'"+','+"'"+element._id+"','1'"+')" ><i class="bi bi-patch-minus"></i></button>';
+            classs='class="table-secondary"';
+            $('#yapilanodemeler').append('<tr '+classs+'><th scope="row">0</th><td>'+zaman+'</td><td>'+element.odeme+'</td><td>'+buttonOdemeIptal+'</td></tr>');
+
+          }   
+          else{
+            
+            yapilanodemelerToplam=yapilanodemelerToplam+element.odeme;
+
+            buttonOdemeIptal='<button type="button" class="btn btn-success" onclick="odemesils('+"'"+res.tc+"'"+','+"'"+element._id+"','0'"+')" ><i class="bi bi-patch-plus"></i></button>';
+            classs='';
+            $('#yapilanodemeler').append('<tr '+classs+'><th scope="row">'+z+'</th><td>'+zaman+'</td><td>'+element.odeme+'</td><td>'+buttonOdemeIptal+'</td></tr>');
+
+          }
+
+        });
+      }
+  
+      console.log(res.ilktaksit)
+      console.log(zaman)
+
+             odemelerSayi=res.taksit-res.yapilanodemeler.length+ziptal;
+             bekleyenodemelerToplam=res.ucret-yapilanodemelerToplam;
+             aylikbekleyenodeme=(bekleyenodemelerToplam/odemelerSayi).toFixed(2);
+
+        for(i=0;i<odemelerSayi;i++)
+        {
+          zaman=new Date(res.ilktaksit);
+          zaman= zaman.toLocaleDateString('en-GB', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).replace(/\./g, '/'); 
+
+          sira=z+1;
+          sonrakiTarihler = moment(zaman, "DD/MM/YYYY").add(z, 'months').format('DD/MM/YYYY');
+
+          $('#odemeler').append('<tr><th scope="row">'+sira+'</th><td>'+sonrakiTarihler+'</td><td>'+aylikbekleyenodeme+'</td></tr>');
+          z=z+1;
+
+        }
+        if(odemelerSayi==0 && yapilanodemelerToplam>0)
+        {
+          $('#odemeler').append('<tr><th scope="row">Bekleyen</th><td>'+zaman+'</td><td>'+bekleyenodemelerToplam+'</td></tr>');
+        }
+
+        $('#yapilanodemelerToplam').html(yapilanodemelerToplam+" TL" );
+        $('#toplam').html(res.ucret+" TL" );         
+        $('#bekleyenodemelerToplam').html(bekleyenodemelerToplam+" TL" );
+
+
+}
+</script> 
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-fullscreen">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="nameHead"></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      
+      <div class="d-flex align-items-start">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <button class="nav-link active" id="v-kisisel-tab" data-bs-toggle="pill" data-bs-target="#v-kisisel" type="button" role="tab" aria-controls="v-kisisel" aria-selected="true">Kişisel Bilgiler</button>
+          <button class="nav-link" id="v-pills-odemeler-tab" data-bs-toggle="pill" data-bs-target="#v-pills-odemeler" type="button" role="tab" aria-controls="v-pills-odemeler" aria-selected="false">Ödeme Bilgileri</button>
+          <button class="nav-link" id="v-pills-sinavlar-tab" data-bs-toggle="pill" data-bs-target="#v-pills-sinavlar" type="button" role="tab" aria-controls="v-pills-sinavlar" aria-selected="false">Sınvalar</button>
+        </div>
+        <div class="tab-content container" id="v-pills-tabContent">
+          
+<!-- ddddddddddddddddddddddddddddddddddddddddddddddd -->
+
+          <div class="tab-pane fade show active" id="v-kisisel" role="tabpanel" aria-labelledby="v-kisisel-tab">
+            <form  name="duzenleForm" id="duzenleForm" >
+
+            <div class="col-lg-6 container justify-content-center">
+              <div class="row">
+
+                <div class="mb-3">
+                  <label class="form-label">Tc Kimlik No </label>
+                  <input type="text" name="tc" id="tc" class="form-control degerBuyuk" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')" required>
+                  </div>
+                <div class="mb-3">
+                <label  class="form-label">Ad</label>
+                <input type="text" name="name" id="name" class="form-control degerBuyuk" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"   required>
+               </div>
+                <div class="mb-3">
+                <label class="form-label">Soyad</label>
+                 <input type="text" name="surname" id="surname" class="form-control degerBuyuk"  oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"  required>
+                </div>
+                 
+                <div class="mb-3">
+                  <label class="form-label">Sınıf</label>
+                  <select name="sinif"  id="sinif" class="form-control degerBuyuk" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"  >
+                    <option value=""></option>
+
+                   </select>
+                 </div>
+        
+                <div class="mb-3">
+                  <label class="form-label">Email address</label>
+                  <input type="email" name="email" id="email" class="form-control degerBuyuk"  aria-describedby="emailHelp">
+                  </div>
+                <div class="mb-3">
+                  <label class="form-label">Veli</label>
+                  <input type="text" name="veli" id="veli" class="form-control degerBuyuk" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"   required>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Telefon</label>
+                  <input type="text" name="telefon" id="telefon" class="form-control degerBuyuk"oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"   required>
+                </div>
+
+  
+                <div class="mb-3" id="roleDiv">
+                  <label class="form-label">Role</label>
+                  <input type="text" name="role" id="role" class="form-control degerBuyuk"oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"   required>
+                </div>       
+
+
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Sifre</label>
+                    <input type="text" name="password" id="password" class="form-control degerBuyuk" id="exampleInputPassword1" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"  required>
+                </div>
+ 
+            </div>
+    </div>
+  </form>  
+  </div>
+
+ 
+<!-- ddddddddddddddddddddddddddddddddddddddddddddddd -->
+        
+          
+          <div class="tab-pane fade show "  id="v-pills-odemeler" role="tabpanel" aria-labelledby="v-pills-odemeler-tab">
+            <div class="row">      
+              <div class="col-lg-9">
+                  <div class="row">
+                      <div class="col-lg-4">
+                          <div class="card text-white bg-secondary  mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Toplam</div>
+                            <div class="card-body">
+                              <h5 class="card-title" id="toplam"></h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="card text-white bg-success  mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Yapılan Ödemeler</div>
+                            <div class="card-body">
+                              <h5 class="card-title" id="yapilanodemelerToplam"></h5>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Beklenen Ödemeler</div>
+                            <div class="card-body">
+                              <h5 class="card-title" id="bekleyenodemelerToplam"></h5>
+                              </div>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tarih</th>
+                                <th scope="col">Ödeme Mikrarı</th>
+                              </tr>
+                            </thead>
+                            <tbody id="odemeler">
+                       
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tarih</th>
+                                <th scope="col">Yapılan Ödeme</th>
+                              </tr>
+                            </thead>
+                            <tbody id="yapilanodemeler">
+                             
+                            </tbody>
+                          </table>
+          
+                  </div>
+                  </div>
+              </div>
+              <div class="col-lg-3">
+                  <div class="row">
+                      <div class="card text-white bg-info mb-12" style="max-width: 18rem;">
+                          <div class="card-header ">Ödeme Yapınız</div>
+                          <div class="card-body">
+                            <form  name="odemegirForm" id="odemegirForm" >
+                              <input type="hidden" name="ogrencitc"  id="ogrencitc">
+          
+                            <h5 class="card-title">Tarihi</h5>
+                            <input type="text" name="taksittarih" class="form-control degerBuyuk " id="tarih" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"  required>
+                           <br> <h5 class="card-title">Miktar</h5>
+                            <input type="text" name="miktar" class="form-control degerBuyuk "oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')"  required>
+                            <br> 
+                            <input type="button" id="odemegir" name="odemegir" class="btn btn-danger" value="Ödeme Gir">
+                          </form>
+                        </div>
+                        </div>
+                  </div>
+              </div>
+          
+          </div>
+
+          </div>
+<!-- ddddddddddddddddddddddddddddddddddddddddddddddd -->
+
+          <div class="tab-pane fade" id="v-pills-sinavlar" role="tabpanel" aria-labelledby="v-pills-sinavlar-tab">
+           <!-- ddddddddddddddddddddddddddddddddddddddddddddddd -->
+    
+
+
+
+          <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Sınav</th>
+                      <th scope="col">Sınav Tarih</th>
+                      <th scope="col">Türkçe</th>
+                      <th scope="col">Tarih</th>
+                      <th scope="col">Din</th>
+                      <th scope="col">İngilizce</th>
+                      <th scope="col">Matematik</th>
+                      <th scope="col">Fen</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sinavlar" >
+             
+                  </tbody>
+                </table>
+              </div>
+            
+        </div>
+
+
+        </div>
+
+        
+           <!-- ddddddddddddddddddddddddddddddddddddddddddddddd -->
+
+        </div>
+      </div>
+  
+</div> 
+    <div class="modal-footer">
+      <button type="button" id="duzenle" name="duzenle" class="btn btn-primary" data-bs-dismiss="modal">Düzenle</button>
+      <button type="button" id="delete" name="delete" class="btn btn-danger" data-bs-dismiss="modal">Sil</button>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,206 @@
+<div class="container">
+
+
+
+
+
+     
+     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Products</h1>
+  
+      </div>
+      <div class="table-responsive">
+  
+  
+       
+        <form id="ajaxForm" class="form-vertical" role="form" autocomplete="off" method="POST" action="/ajaxRequest/">
+          <fieldset>
+
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="">
+            </div>
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">Surname</label>
+              <input type="text" class="form-control" name="surname" id="surname" placeholder="">
+            </div>       
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">email</label>
+              <input type="text" class="form-control" name="email" id="email" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">password</label>
+              <input type="text" class="form-control" name="password" id="password" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">telefon</label>
+              <input type="text" class="form-control" name="telefon" id="telefon" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">site</label>
+              <input type="text" class="form-control" name="site" id="site" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">ck</label>
+              <input type="text" class="form-control" name="ck" id="ck" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">cs</label>
+              <input type="text" class="form-control" name="cs" id="cs" placeholder="">
+            </div>    
+            <div class="pull-right">
+              <br>
+              <div class="btn-group col-xs-12">
+  
+                <button type="button" class="btn btn-primary" id="sendTreeJSon2">Save</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+  
+      
+
+
+        <form id="ajaxForm3" class="form-vertical" role="form" autocomplete="off" method="POST" action="/ajaxRequest/">
+          <fieldset>
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">sitecategory</label>
+              <input type="text" class="form-control" name="category" id="category" placeholder="">
+            </div>   
+            <div class="pull-right">
+
+              <br>
+              <div class="btn-group col-xs-12">
+  
+                <button type="button" class="btn btn-primary" id="sendTreeJSon3">Save</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+  
+
+
+        
+        <form id="ajaxForm4" class="form-vertical" role="form" autocomplete="off" method="POST" action="/ajaxRequest/">
+          <fieldset>
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">siteattributes</label>
+              <input type="text" class="form-control" name="attributes[]" id="attributes" placeholder="">
+            </div>     
+            <div class="pull-right">
+
+              <br>
+              <div class="btn-group col-xs-12">
+  
+                <button type="button" class="btn btn-primary" id="sendTreeJSon4">Save</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+  
+
+  </div>
+
+</div>
+
+
+
+
+
+       
+  <script type="text/javascript" >
+  
+    $(document).ready(function() {
+       $.get({ 
+        url: '/api/v1/user/setting', 
+      headers:{
+                'Authorization':'Bearer <%= locals.session.bearertoken %>',
+              }}).then(res => {
+                $('#name').val(res.name);
+                $('#surname').val(res.surname);
+                $('#email').val(res.email);
+                $('#password').val(res.password);
+                $('#telefon').val(res.telefon);
+                $('#site').val(res.site);
+                $('#ck').val(res.ck);
+                $('#cs').val(res.cs);
+                $('#sitecategory').val(res.sitecategory);
+                console.log(res._id);
+        
+            });
+  
+  });
+
+
+  $("#sendTreeJSon2").click(function(event) {
+    event.preventDefault();
+    var form = $('#ajaxForm');
+    var method = 'POST';
+    var url = '/api/v1/user/user/edit';
+    var jsonData = $(form).serializeObject();
+    console.log(jsonData);
+    $.ajax({
+      url: url,
+      headers: {
+        "Authorization": "Bearer <%= locals.session.bearertoken %>"
+      },
+      method: 'POST',
+      dataType: 'json',
+      data: jsonData,
+      success: function(data){
+        console.log('succes: '+data);
+       // $('#ajaxForm')[0].reset();
+      }
+    });
+  });
+    
+
+  
+  $("#sendTreeJSon4").click(function(event) {
+    event.preventDefault();
+    var form = $('#ajaxForm4');
+    var method = 'POST';
+    var url = '/api/v1/woo/product/createattributes';
+    var jsonData = $(form).serializeObject();
+    console.log(jsonData);
+    $.ajax({
+      url: url,
+      headers: {
+        "Authorization": "Bearer <%= locals.session.bearertoken %>"
+      },
+      method: 'POST',
+      dataType: 'json',
+      data: jsonData,
+      success: function(data){
+        console.log('succes: '+data);
+       // $('#ajaxForm')[0].reset();
+      }
+    });
+  });
+    
+
+
+  
+  $("#sendTreeJSon3").click(function(event) {
+    event.preventDefault();
+    var form = $('#ajaxForm3');
+    var method = 'POST';
+    var url = '/api/v1/woo/product/createcategory';
+    var jsonData = $(form).serializeObject();
+    console.log(jsonData);
+    $.ajax({
+      url: url,
+      headers: {
+        "Authorization": "Bearer <%= locals.session.bearertoken %>"
+      },
+      method: 'POST',
+      dataType: 'json',
+      data: jsonData,
+      success: function(data){
+        console.log('succes: '+data);
+       // $('#ajaxForm')[0].reset();
+      }
+    });
+  });
+    
+    </script> 

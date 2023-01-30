@@ -1,0 +1,75 @@
+
+  <div class="container col-sm-8">
+    <div class="well"> 
+      <form id="ajaxForm" name="ajaxForm" class="form-vertical" role="form" autocomplete="off" method="POST">
+    
+        <div class="form-group col-xs-12 col-sm-12">
+          <label for="" class="control-label">name</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="">
+        </div>       
+        <div class="form-group col-xs-12 col-sm-12">
+          <label for="" class="control-label">surname</label>
+          <input type="text" class="form-control" name="surname" id="surname" placeholder="">
+        </div>    
+        <div class="form-group col-xs-12 col-sm-12">
+          <label for="" class="control-label">email</label>
+          <input type="text" class="form-control" name="email" id="email" placeholder="">
+        </div>    
+        <div class="form-group col-xs-12 col-sm-12">
+          <label for="" class="control-label">password</label>
+          <input type="text" class="form-control" name="password" id="password" placeholder="">
+        </div>    
+        <div class="form-group col-xs-12 col-sm-12">
+          <label for="" class="control-label">telefon</label>
+          <input type="text" class="form-control" name="telefon" id="telefon" placeholder="">
+        </div>    
+        <div class="form-group col-xs-12 col-sm-12">
+          <label for="" class="control-label">role</label>
+          <input type="text" class="form-control" name="role" id="role" placeholder="">
+        </div>    
+        <div class="form-group col-xs-12 col-sm-12">
+          <label for="" class="control-label">site</label>
+          <input type="text" class="form-control" name="site" id="site" placeholder="">
+        </div>    
+        <div class="pull-right">
+          <br>
+          <div class="btn-group col-xs-12">
+
+            <button type="button" class="btn btn-primary" id="sendTreeJSon2">Save</button>
+          </div>
+        </div>
+        </form> </div>
+  </div>
+
+
+  
+  <script type="text/javascript" >
+
+    $(document).ready(function() {
+  $("#sendTreeJSon2").click(function(event) {
+    event.preventDefault();
+    var form = $('#ajaxForm');
+    var method = 'POST';
+    var url = '/api/v1/users/add';
+    var jsonData = $(form).serializeObject();
+    console.log(jsonData);
+    $.ajax({
+      url: url,
+      headers: {
+        "Authorization": "Bearer <%= locals.session.bearertoken %>"
+      },
+      method: 'POST',
+      dataType: 'json',
+      data: jsonData,
+      success: function(data){
+        console.log('succes: '+data);
+       // $('#ajaxForm')[0].reset();
+      }
+    });
+  });
+});
+
+
+
+
+</script> 

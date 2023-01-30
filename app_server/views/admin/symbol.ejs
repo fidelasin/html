@@ -1,0 +1,82 @@
+
+     
+     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Symbols</h1>
+  
+      </div>
+      <div class="table-responsive">
+  
+  
+       
+  
+  
+  <table id="tabletest" class="display " style="width:100%">
+    <thead>
+      <tr>
+        <th>Sıra</th>
+        <th>Symbol</th>
+        <th>Class</th>
+          <th>exchange</th>
+          <th>name</th>
+          <th></th>
+          <th></th>
+        </tr>
+  </thead></table>
+  <script type="text/javascript" >
+  
+  $(document).ready(function() {
+
+  $('#tabletest').DataTable( {
+    "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+        },
+    "processing": true,
+    "serverSide": true,
+    "stateSave": true,
+    "ajax": {
+      "url": "/admin/symbolliste",
+      "dataSrc": "data"
+    },
+      "orderable": false,
+        "order": [ 0, 'asc' ],
+        "aoColumnDefs": [
+          { "bSortable": false, "aTargets": [0,2,4] } 
+          ],
+  
+        
+        'scrollCollapse': true,
+  
+        'lengthMenu':[[20,50,100],[20,50,100]],
+      //  searching:true,
+     //   sort:false,
+    "columns": [
+     { "data" : "Sira" },
+      { "data" : "symbol" },
+      { "data" : "class" },
+      { "data" : "exchange" },
+      { "data" : "name" },
+      { "data" : "anasayfa" },
+      { "data" : "aktif" },
+   //  {"defaultContent":'<button class="btn btn-primary" id="aktif" >Detay</button><button class="btn btn-primary" id="anasayfa" data-bs-toggle="modal" data-bs-target="#exampleModal">Detay</button>'}
+     
+    ]
+  });
+  
+  $('#tabletest').on( 'click', '#aktif', function () {
+       let  symbol = $(this).closest("tr").find("td")[1].innerHTML ;
+         $.getJSON('/admin/symbolaktif/'+symbol).then(res => {
+          $('#tabletest').DataTable().ajax.reload(null, false);
+    });
+   });
+  
+   $('#tabletest').on( 'click', '#anasayfa', function () {
+       let  symbol = $(this).closest("tr").find("td")[1].innerHTML ;
+      
+         $.getJSON('/admin/symbolanasayfa/'+symbol).then(res => {
+          $('#tabletest').DataTable().ajax.reload(null, false);
+    });
+   });
+  });
+  </script> 
+  </div>
+</div>

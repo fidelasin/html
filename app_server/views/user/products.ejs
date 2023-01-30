@@ -1,0 +1,259 @@
+<div class="container">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nameHead"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <form id="ajaxForm" class="form-vertical" role="form" autocomplete="off" method="POST" action="/ajaxRequest/">
+          <fieldset>
+
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">Title</label>
+              <input type="text" class="form-control" name="title" id="title" placeholder="">
+            </div>
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">Description</label>
+              <input type="text" class="form-control" name="description" id="description" placeholder="">
+            </div>       
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">Brand</label>
+              <input type="text" class="form-control" name="brand" id="brand" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">weight</label>
+              <input type="text" class="form-control" name="weight" id="weight" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">itemModelNumber</label>
+              <input type="text" class="form-control" name="itemModelNumber" id="itemModelNumber" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">size</label>
+              <input type="text" class="form-control" name="size" id="size" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">numberOfİtem</label>
+              <input type="text" class="form-control" name="numberOfİtem" id="numberOfİtem" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">quantity</label>
+              <input type="text" class="form-control" name="quantity" id="quantity" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">price</label>
+              <input type="text" class="form-control" name="price" id="price" placeholder="">
+            </div>    
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">batteriesRequired</label>
+              <input type="text" class="form-control" name="batteriesRequired" id="batteriesRequired" placeholder="">
+            </div>     
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">itemWeight</label>
+              <input type="text" class="form-control" name="itemWeight" id="itemWeight" placeholder="">
+            </div> 
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">gtin</label>
+              <input type="text" class="form-control" name="gtin" id="gtin" placeholder="">
+            </div> 
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">ean</label>
+              <input type="text" class="form-control" name="ean" id="ean" placeholder="">
+            </div> 
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">Stock</label>
+              <input type="text" class="form-control" name="stock" id="stock" placeholder="">
+            </div> 
+          
+            
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">color</label>
+              <input type="text" class="form-control" name="color" id="color" placeholder="">
+            </div> 
+
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">productDimensions</label>
+              <input type="text" class="form-control" name="productDimensions" id="productDimensions" placeholder="">
+            </div> 
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">material</label>
+              <input type="text" class="form-control" name="material" id="material" placeholder="">
+            </div> 
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">type</label>
+              <input type="text" class="form-control" name="type" id="type" placeholder="">
+            </div> 
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">pictures</label>
+              <input type="text" class="form-control" name="pictures" id="pictures" placeholder="">
+            </div> 
+            <div class="form-group col-xs-12 col-sm-12">
+              <label for="" class="control-label">video</label>
+              <input type="text" class="form-control" name="video" id="video" placeholder="">
+            </div> 
+            <div class="pull-right">
+              <br>
+              <div class="btn-group col-xs-12">
+  
+                <button type="button" class="btn btn-primary" id="sendTreeJSon">Save</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+     
+  </div> 
+      <div class="modal-footer">
+        <button type="button" id="duzenle" name="duzenle" class="btn btn-primary" data-bs-dismiss="modal">Düzenle</button>
+        <button type="button" id="delete" name="delete" class="btn btn-danger" data-bs-dismiss="modal">Sil</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+     
+     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Products</h1>
+  
+      </div>
+      <div class="table-responsive">
+  
+  
+       
+  
+  
+  <table id="tabletest" class="display " style="width:100%">
+    <thead>
+      <tr>
+        <th>Sıra</th>
+        <th>title</th>
+        <th>brand</th>
+        <th>price</th>
+        <th>ean</th>
+        <th>gtin</th>
+        <th>stock</th>
+        <th>_id</th>
+        <th>Setting</th>
+        </tr>
+  </thead></table>
+  <script type="text/javascript" >
+  
+  $(document).ready(function() {
+
+
+
+  $('#tabletest').DataTable( {
+    "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+        },
+    "processing": true,
+    "serverSide": true, 
+    "stateSave": true,
+    "ajax": {
+      "url": "/api/v1/products/userGetall",
+      "dataSrc": "data",
+      "headers": {
+        "Authorization": "Bearer <%= locals.session.bearertoken %>"
+       },
+    },
+
+    "orderable": false,
+        "order": [ 0, 'asc' ],
+        "aoColumnDefs": [{ "bVisible": false, "aTargets": [0] },
+          { "bSortable": false, "aTargets": [0,1,2,3,4,5,6] } 
+          ],
+   
+        
+        'scrollCollapse': true,
+  
+        'lengthMenu':[[3,50,100],[3,50,100]],
+        searching:true,
+     //  sort:false,
+    "columns": [
+    { "data" : "sira" },
+      { "data" : "title" },
+      { "data" : "brand" },
+      { "data" : "price" },
+      { "data" : "ean" },
+      { "data" : "gtin" },
+      { "data" : "stock" },
+      { "data" : "_id" },
+      { "data":'button' }
+
+    ]
+  });
+   
+  $('#tabletest').DataTable().ajax.reload(null, false);
+  $(document).on("click", ".productAdd", function () {
+     var id = $(this).data('id');
+     $.get({ 
+  url: '/api/v1/woo/product/add/'+id, 
+headers:{
+          'Authorization':'Bearer <%= locals.session.bearertoken %>',
+        }}).then(res => {
+          console.log(res);
+  
+      });
+
+});
+  
+
+$("#duzenle").click(function(event) {
+    event.preventDefault();
+    var form = $('#ajaxForm');
+    var method = 'POST';
+    var url = '/api/v1/products/edit';
+    var jsonData = $(form).serializeObject();
+    console.log(jsonData);
+    $.ajax({
+      url: url,
+      headers: {
+          'Authorization':'Bearer <%= locals.session.bearertoken %>',
+      },
+      method: 'POST',
+      dataType: 'json',
+      data: jsonData,
+      success: function(data){
+        console.log('succes: '+data);
+        $('#ajaxForm')[0].reset();
+        $('#tabletest').DataTable().ajax.reload(null, false);
+
+      }
+    });
+  });
+
+
+  
+    $('#delete').click(function () {
+  
+     if(confirm("Bilgiler Silinecek Geri Dönülemez, Onaylıyormusunuz?")){
+     var ean = document.getElementById('ean').value;
+     $.get({ 
+  url: '/api/v1/products/delete/'+ean, 
+headers:{
+          'Authorization':'Bearer <%= locals.session.bearertoken %>',
+        }}).then(res => {
+      $('#tabletest').DataTable().ajax.reload(null, false);
+      });
+      }
+       else{ return false; }
+    
+    });
+  
+  
+
+  
+  }); 
+  
+  
+  </script> 
+  </div>
+
+

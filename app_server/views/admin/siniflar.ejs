@@ -1,0 +1,396 @@
+    
+ <script type="text/javascript" >
+    $(document).ready(function() {
+     $.getJSON('/admin/siniflargetir/').then(res => {
+       sinifListFunc(res);
+          });
+
+
+    $('#sinifadigir').click(function () {
+        var data=$("#sinifadi").val(); 
+        if(data !=""){
+
+            $.post('/admin/sinifadigir/',{"sinifadi":data}).then(res => {
+                $("#sinifadi").val("");
+                sinifListFunc(res);
+            });
+        }
+         
+    });
+
+
+    $('#tableSinif').on( 'click', 'button', function () {
+       let  sinif = $(this).closest("tr").find("button")[0].innerHTML ;
+
+    $.getJSON('/admin/sinifsinavlar/'+sinif).then(res => {
+      console.log(res);
+         sinifsinavlarFunc(res,sinif);
+    });
+	
+	
+	$.getJSON('/admin/sinifogrenciler/'+sinif).then(res => {
+         sinifogrencilerFunc(res,sinif);
+    });
+	
+	
+    } );
+	
+	
+	
+
+
+});
+
+
+
+function sinifadisil(id){
+  $.get('/admin/sinifadisil/'+id).then(res => {
+    sinifListFunc(res);
+    }); 
+}
+
+function sinifListFunc(res){
+ $('#sinifTable').html("");
+ z=0;
+       res.forEach(element => {
+         z++;
+           buttonOdemeIptal='<button type="button" class="btn btn-danger" onclick="sinifadisil('+"'"+element._id+"'"+')" ><i class="bi bi-patch-minus"></i></button>';
+           classs='class="table-secondary"';
+           $('#sinifTable').append('<tr '+classs+'><th scope="row">'+z+'</th><td><button class="btn btn-primary" data-id="'+element._id+'"  data-bs-toggle="modal" data-bs-target="#exampleModal">'+element.sinifadi+'</button></td><td>'+buttonOdemeIptal+'</td></tr>');
+
+       });
+
+}
+
+
+
+
+function sinifogrencilerFunc(res,sinif){
+  $('#ogrenciler').html("");
+    tablonot="";
+    tablonotust='';
+		sira=0;
+res.forEach(element => {
+sira++;
+
+      
+
+        
+          tablonot=tablonot+"<tr ><td>"+sira+"</td><td>"+element["tc"]+"</td><td>"+
+          element["name"]+ " " +element["surname"]+"</td><tr>";
+     
+            
+});
+
+
+
+  $('#ogrenciler').append(tablonot);
+  
+  
+  
+
+
+
+}
+
+
+function sinifsinavlarFunc(res,sinif){
+  $('#sinavlar').html("");
+  $('#basaridurum').html("");
+  console.log(res);
+  datas=[];
+
+sinavsayi=0;
+res.forEach(element => {
+  sinavsayi++;
+  let tablonot="";
+  let tablonotust="";
+  console.log("sinav sayisi"+res.length);
+ let veri=[];
+
+ console.log("sinav numarasi"+sinavsayi);
+ console.log(element.sinavlar.length);
+    
+    tablonotust='<tr  > <th class="col-md-2">Tc</th> <th class="col-md-3">Adı Soyadı</th>'+   
+      '<th > <p  class="test2">Türkçe Doğru</p> </th><th ><p  class="test2">Türkçe Yanlış</p >   </th><th ><p  class="test2">Türkçe Net</p >   </th>'+
+        '<th > <p class="test2">Tarih Doğru</p> </th><th ><p class="test2">Tarih Yanlış</p >   </th><th ><p class="test2">Tarih Net</p >   </th>'+
+          '<th > <p class="test2">Din Doğru</p> </th><th ><p class="test2">Din Yanlış</p >   </th><th ><p class="test2">Din Net</p >   </th>'+
+            '<th > <p class="test2">İngilizce Doğru</p> </th><th ><p class="test2">İngilizce Yanlış</p >   </th><th ><p class="test2">İngilizce Net</p >   </th>'+
+              '<th > <p class="test2">Matematik Doğru</p> </th><th ><p class="test2">Matematik Yanlış</p >   </th><th ><p class="test2">Matematik Net</p >   </th>'+
+                '<th > <p class="test2">Fen Doğru</p> </th><th ><p class="test2">Fen Yanlış</p >   </th><th ><p class="test2">Fen Net</p >   </th>'+
+                  '<th > <p class="test2">Toplam Doğru</p> </th><th ><p class="test2">Toplam Yanlış</p >   </th><th ><p class="test2">Toplam Net</p >   </th>'+
+                    '<th > <p class="test2">LGS PUAN</p> </th><th ><p class="test2">LGS Sınıf</p >   </th><th ><p class="test2">LGS Kurum</p >   </th>'+
+                      '<th > <p class="test2">LGS İlçe</p> </th><th ><p class="test2">LGS İl</p >   </th><th ><p class="test2">LGS Genel</p >   </th>'+
+        
+        '</tr>';
+        turkceNetToplam=0;
+        tarihNetToplam=0;
+        dinNetToplam=0;
+        ingilizceNetToplam=0;
+        matematikNetToplam=0;
+        fenNetToplam=0;
+        z=0;
+    for (i=0;i<element.sinavlar.length;i++)
+    {
+      console.log(element.sinavlar[i]["sinifSube"]);
+
+      
+
+        if(element.sinavlar[i]["sinifSube"]==sinif)
+        {
+          turkceNetToplam +=element.sinavlar[i]["turkce"];
+          tarihNetToplam +=element.sinavlar[i]["tarih"];
+          dinNetToplam +=element.sinavlar[i]["din"];
+          ingilizceNetToplam +=element.sinavlar[i]["ingilizce"];
+          matematikNetToplam +=element.sinavlar[i]["matematik"];
+          fenNetToplam +=element.sinavlar[i]["fen"];
+          z++;
+      color="";
+      if(z%2==0)
+        {          
+          color="class='table-secondary'";
+        }
+        
+          tablonot=tablonot+"<tr "+color+" ><td>"+element.sinavlar[i]["tc"]+"</td><td>"+
+          element.sinavlar[i]["adiSoyadi"]+"</td><td>"+
+          element.sinavlar[i]["turkceD"]+"</td><td>"+
+          element.sinavlar[i]["turkceY"]+"</td><td>"+
+          element.sinavlar[i]["turkce"]+"</td><td>"+
+          element.sinavlar[i]["tarihD"]+"</td><td>"+
+          element.sinavlar[i]["tarihY"]+"</td><td>"+
+          element.sinavlar[i]["tarih"]+"</td><td>"+     
+          element.sinavlar[i]["dinD"]+"</td><td>"+
+          element.sinavlar[i]["dinY"]+"</td><td>"+
+          element.sinavlar[i]["din"]+"</td><td>"+    
+          element.sinavlar[i]["ingilizceD"]+"</td><td>"+
+          element.sinavlar[i]["ingilizceY"]+"</td><td>"+
+          element.sinavlar[i]["ingilizce"]+"</td><td>"+
+            element.sinavlar[i]["matematikD"]+"</td><td>"+
+          element.sinavlar[i]["matematikY"]+"</td><td>"+
+          element.sinavlar[i]["matematik"]+"</td><td>"+
+            element.sinavlar[i]["fenD"]+"</td><td>"+
+          element.sinavlar[i]["fenY"]+"</td><td>"+
+            element.sinavlar[i]["fen"]+"</td><td>"+
+              element.sinavlar[i]["toplamD"]+"</td><td>"+
+                element.sinavlar[i]["toplamY"]+"</td><td>"+
+                  element.sinavlar[i]["toplam"]+"</td><td>"+
+                    element.sinavlar[i]["lgspuan"]+"</td><td>"+
+                      element.sinavlar[i]["lgssinif"]+"</td><td>"+
+                        element.sinavlar[i]["lgskurum"]+"</td><td>"+
+                          element.sinavlar[i]["lgsilce"]+"</td><td>"+
+                            element.sinavlar[i]["lgsil"]+"</td><td>"+
+                              element.sinavlar[i]["lgsgenel"]+"</td><tr>";
+                 } 
+            
+
+    }
+    turkceBasari= Math.round(((turkceNetToplam*100)/20)/z);
+    tarihBasari= Math.round(((tarihNetToplam*100)/10)/z);
+    dinBasari= Math.round(((dinNetToplam*100)/10)/z);
+    ingilizceBasari= Math.round(((ingilizceNetToplam*100)/10)/z);
+    matematikBasari= Math.round(((matematikNetToplam*100)/20)/z);
+    fenBasari= Math.round(((fenNetToplam*100)/20)/z);
+
+         // chart(datas,ders,sinavsayi);
+
+          tablo='<table class="table table-bordered">'+tablonotust+tablonot+'</table>';
+          sinavtarihi=element.sinavtarih;
+ bol = sinavtarihi.split('T');
+ sinavtarihi=bol[0];
+  $('#sinavlar').append('<tr ><th scope="row">'+sinavsayi+'</th><td><button onclick="ackapa('+"'"+element._id+"'"+')">'+element.sinav+'</button></td><td>'+sinavtarihi+'</td><td>%'+turkceBasari+'</td><td>%'+tarihBasari+'</td><td>%'+dinBasari+'</td><td>%'+ingilizceBasari+'</td><td>%'+matematikBasari+'</td><td>%'+fenBasari+'</td></tr>');
+  $('#sinavlar').append('<tr  class="sinavlar" id="'+element._id+'"><td colspan="3">'+tablo+'</td></tr>');
+});
+
+
+
+         
+$('.sinavlar').hide();
+
+
+}
+
+function chart(datas,ders,sinavsayi){
+  $('#basaridurum').append('<div class="col-lg-3"><canvas id="'+ders+sinavsayi+'" ></canvas> </div>');
+
+  var ctx = document.getElementById(ders+sinavsayi);
+            var myBarChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels:datas[sinavsayi],
+                    datasets: [{
+                        label: 'Number of Active Customers',
+                        data:datas[sinavsayi]["not"],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255,99,132,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+}
+function ackapa(id) {
+  var x = document.getElementById(id);
+  if (x.style.display === "none") {
+    x.style.display = "";
+  } else {
+    x.style.display = "none";
+  }
+
+}
+
+
+
+</script>
+  
+<style>
+
+p.test2 {
+  writing-mode: vertical-rl; 
+}
+
+</style>
+   <div class="container">
+          
+     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Sınıf İşlemleri</h1>
+
+      </div>
+       <div class="row justify-content-md-center ">
+          
+           <div class="col col-lg-4">
+             <form  name="sinifgirForm" id="sinifgirForm" >
+                 <div class="mb-3">
+                       <label class="form-label">Sınıf Tanımla </label>
+                       <input type="text" name="sinifadi" id="sinifadi" class="form-control" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')" required>
+                       <label class="form-label"></label>
+                       <input type="button" id="sinifadigir" name="sinifadigir" class="form-control btn btn-danger" value="Sınıf Tanımla">
+
+                    </div>
+                </form>
+       </div>
+
+
+     </div>
+     
+     <div class="row">
+         <div class="col-lg-12">
+             <table class="table" id="tableSinif">
+               <thead>
+                 <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">Sınıf Adı</th>
+                   <th scope="col">işlemler</th>
+                 </tr>
+               </thead>
+               <tbody id="sinifTable">
+          
+               </tbody>
+             </table>
+           </div>
+
+          
+     </div>
+   
+
+
+     
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-fullscreen">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="nameHead"></h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+       <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+      
+       <div class="d-flex align-items-start">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <button class="nav-link" id="v-pills-ogrenciler-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ogrenciler" type="button" role="tab" aria-controls="v-pills-ogrenciler" aria-selected="false">Öğrenciler</button>
+          <button class="nav-link" id="v-pills-sinavlar-tab" data-bs-toggle="pill" data-bs-target="#v-pills-sinavlar" type="button" role="tab" aria-controls="v-pills-sinavlar" aria-selected="false">Sınavlar</button>
+        </div>
+       <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+
+
+        <div class="tab-content container" id="v-pills-tabContent">
+                 <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+
+                 <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+
+          <div class="tab-pane fade" id="v-pills-sinavlar" role="tabpanel" aria-labelledby="v-pills-sinavlar-tab">
+       
+      
+          <script     src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js">    </script>
+
+            <div class="row">
+              <div class="col-lg-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Sınav</th>
+                        <th scope="col">Sınav Tarihi</th>
+                        <th scope="col">Türkçe</th>
+                        <th scope="col">Tarih</th>
+                        <th scope="col">Din</th>
+                        <th scope="col">ingilizce</th>
+                        <th scope="col">Matematik</th>
+                        <th scope="col">Fen</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sinavlar" >
+               
+                    </tbody>
+                  </table>
+                </div>
+              
+          </div>
+
+
+          </div>
+                 <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+
+
+          <div class="tab-pane fade" id="v-pills-ogrenciler" role="tabpanel" aria-labelledby="v-pills-ogrenciler-tab">
+       
+      
+         
+            <div class="row">
+              <div class="col-lg-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">TC</th>
+                        <th scope="col">Ad Soyad</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ogrenciler" >
+               
+                    </tbody>
+                  </table>
+                </div>
+              
+          </div>
+
+
+          </div>
+                 <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+
+                 <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+
+        </div>
+      </div>
+       <!--asdasdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd-->
+ </div> 
+     <div class="modal-footer">
+
+     </div>
+   </div>
+ </div>
+</div>

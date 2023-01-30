@@ -1,0 +1,206 @@
+    
+ <script type="text/javascript" >
+    $(document).ready(function() {
+     $.getJSON('/admin/personellergetir/').then(res => {
+        personelListFunc(res);
+          });
+
+          
+      
+    $('#personelsinifgir').click(function () {
+        var data=$("#personelsinif").val(); 
+        var personelid=$("#personelid").val(); 
+        var personeladi=$("#personeladi").val(); 
+        var personelbrans=$("#personelbrans").val(); 
+        if(data !=""){
+
+            $.post('/admin/personelsinifgir/',{"personelsinif":data,"personelid":personelid,"personeladi":personeladi,"personelbrans":personelbrans}).then(res => {
+              console.log(res);
+              personelsinifListFunc(res);
+
+            });
+        }
+         
+    });
+
+      
+    $('#personeladigir').click(function () {
+        var data=$("#personeladi").val(); 
+        var brans=$("#personelbrans").val(); 
+        if(data !=""){
+
+            $.post('/admin/personeladigir/',{"personeladi":data,"personelbrans":brans}).then(res => {
+                $("#personeladi").val("");
+                personelListFunc(res);
+            });
+        }
+         
+    });
+
+    $('#tablepersonel').on( 'click', 'button', function () {
+       var data = $(this).attr('data-id');
+ 
+       if(typeof(data) != "undefined" && data !==""){
+        $.getJSON('/admin/personeldetaygetir/'+data).then(res => {
+            personelsinifListFunc(res);
+
+          });
+       }
+         
+   
+    } );
+});
+
+
+function personeladisil(id){
+  $.get('/admin/personeladisil/'+id).then(res => {
+    personelListFunc(res);
+    }); 
+}
+
+function personelListFunc(res){
+ $('#personelTable').html("");
+ z=0;
+       res.forEach(element => {
+         z++;
+           buttonOdemeIptal='<button type="button" class="btn btn-danger" onclick="personeladisil('+"'"+element._id+"'"+')" ><i class="bi bi-patch-minus"></i></button>';
+           classs='class="table-secondary"';
+           $('#personelTable').append('<tr '+classs+'><th scope="row">'+z+'</th><td><button class="btn btn-primary" data-id="'+element._id+'"  data-bs-toggle="modal" data-bs-target="#exampleModal">'+element.personeladi+'</button></td><td>'+element.personelbrans+'</td><td>'+buttonOdemeIptal+'</td></tr>');
+
+       });
+
+}
+ 
+
+function personelsinifListFunc(res){
+
+  $('#personelSinifi').html("");
+  $('#personelsinif').html("");
+ 
+  $('#nameHead').html(res.data.personeladi +" ("+res.data.personelbrans+")");
+            $('#personelid').val(res.data._id);
+            $('#personeladi').val(res.data.personeladi);
+            $('#personelbrans').val(res.data.personelbrans);
+            z=0;
+            res.data.siniflar.forEach(function(element){
+                z++;
+                $('#personelSinifi').append('<tr><th scope="row">'+z+'</th><td>'+element.sinifadi+'</td></tr>');
+
+            })
+            res.sinifdata.forEach(function(element){
+              console.log(element.sinifadi);
+               $('#personelsinif').append('<option value="'+element.sinifadi+'">'+element.sinifadi+'</option>');
+
+            })
+
+}
+
+
+</script>
+  
+   <div class="container">
+          
+     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Personel İşlemleri</h1>
+
+      </div>
+       <div class="row justify-content-md-center ">
+          
+           <div class="col col-lg-12">
+             <form  name="personelgirForm" id="personelgirForm" >
+                 <div class="mb-3">
+                    <label class="form-label">Personel Adı </label>
+                    <input type="text" name="personeladi" id="personeladi" class="form-control" oninvalid="this.setCustomValidity('Zorunlu Alan doldurunuz')" required>
+                    <label class="form-label"></label>
+                    <label class="form-label">Personel Brans </label>
+
+                        <select class="form-select form-select-lg mb-3" name="personelbrans" id="personelbrans" aria-label=".form-select-lg example">
+                        <option value="Matematik">Matematik</option>
+                        <option value="Fen">Fen</option>
+                        <option value="Türkçe">Türkçe</option>
+                        </select>
+                        <label class="form-label"></label>
+                       <input type="button" id="personeladigir" name="personeladigir" class="form-control btn btn-danger" value="personel Tanımla">
+
+                    </div>
+                </form>
+       </div>
+
+
+     </div>
+     
+     <div class="row">
+         <div class="col-lg-12">
+             <table class="table" id="tablepersonel">
+               <thead>
+                 <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">personel Adı</th>
+                   <th scope="col">personel Brans</th>
+                   <th scope="col">işlemler</th>
+                 </tr>
+               </thead>
+               <tbody id="personelTable">
+          
+               </tbody>
+             </table>
+           </div>
+
+          
+     </div>
+   
+
+
+     
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-fullscreen">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="nameHead"></h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+       <!--ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss-->
+       
+     
+       <div class="col col-lg-12">
+            <div class="mb-3">
+              <input type="hidden" id='personelid'name='personelid'>
+              <input type="hidden" id='personeladi'name='personeladi'>
+              <input type="hidden" id='personelbrans'name='personelbrans'>
+              <select class="form-select form-select-lg mb-3" name="personelsinif" id="personelsinif" aria-label=".form-select-lg example" >
+                   
+         
+                 </select>
+             <label class="form-label"></label>
+                  <input type="button" id="personelsinifgir" name="personelsinifgir" class="form-control btn btn-danger" value="personel Tanımla">
+
+               </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+        <table class="table" id="">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Sınıf</th>
+
+            </tr>
+          </thead>
+          <tbody id="personelSinifi">
+     
+          </tbody>
+        </table>
+      </div>
+
+     
+</div>
+       <!--asdasdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd-->
+ </div> 
+     <div class="modal-footer">
+
+     </div>
+   </div>
+ </div>
+</div>

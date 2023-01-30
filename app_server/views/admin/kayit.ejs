@@ -1,0 +1,130 @@
+    
+     
+ <script type="text/javascript" >
+   $(document).ready(function() {
+    $.getJSON('/admin/siniflargetir/').then(res => {
+      sinifListFunc(res);
+         });
+
+
+function sinifListFunc(res){
+$('#sinif').html("");
+
+option='';
+
+      res.forEach(element => {
+         option=option+'<option value="'+element.sinifadi+'">'+element.sinifadi+'</option>';
+
+      });
+      $('#sinif').html(option);
+
+}
+   });
+
+
+
+</script>
+ 
+     
+      <div class="container">
+             
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+         <h1 class="h2">Yeni öğrenci Kayıt</h1>
+ 
+       </div>
+        <div class="row justify-content-md-center ">
+           
+            <div class="col col-lg-4">
+                <form action="/admin/kayit" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Tc Kimlik No</label>
+                        <input type="text" name="tc" class="form-control"  required>
+                        
+                     </div>
+                   <div class="mb-3">
+                      <label  class="form-label">Ad</label>
+                      <input type="text" name="name" class="form-control" hesap   required>
+                     
+                   </div>
+                    <div class="mb-3">
+                      <label class="form-label">Soyad</label>
+                       <input type="text" name="surname" class="form-control"  hesap  required>
+                   </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email address</label>
+                      <input type="email" name="email" class="form-control"  aria-describedby="emailHelp">
+                     
+                   </div>
+                   <div class="mb-3">
+                    <label class="form-label">Veli</label>
+                    <input type="text" name="veli" class="form-control" hesap   required>
+                   
+                 </div>
+    
+                   <div class="mb-3">
+                    <label class="form-label">Telefon</label>
+                    <input type="text" name="telefon" class="form-control"hesap   required>
+
+                 </div>
+    
+               
+    
+    
+                   <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Sifre</label>
+                      <input type="password" name="password" class="form-control" id="exampleInputPassword1" hesap  required>
+                   </div>
+       
+                 
+              </div>
+
+              <div class="col col-lg-4">
+               <div class="mb-3">
+                  <label class="form-label">Öğrenci No</label>
+                  <input type="text" name="ogrencino" class="form-control" hesap  required>
+                 
+               </div>
+                 <div class="mb-3">
+                    <label class="form-label">Sınıf</label>
+                    <select name="sinif"  id="sinif" class="form-control" hesap  required>
+                        <option value=""></option>
+
+                    </select>
+                   
+                 </div>
+                 <div class="mb-3">
+                  <label class="form-label">Kayıt Ücreti</label>
+                  <input type="text" name="ucret" class="form-control" hesap  required>
+                 
+               </div>
+                 <div class="mb-3">
+                    <label class="form-label">İlk Ödeme Miktarı</label>
+                    <input type="text" name="ilkodememiktari" class="form-control" value="0" hesap  required>
+                   
+                 </div>
+
+                 <div class="mb-3">
+                  <label class="form-label">Taksit Sayısı</label>
+                  <input type="text" name="taksit" class="form-control" hesap  required>
+                 
+               </div>
+
+                 <div class="mb-3">
+                  <label class="form-label">ilk Taksit Tarihi</label>
+                  <input type="text" name="taksittarih" class="form-control" id="tarih" hesap  required>
+                 
+               </div>
+
+       
+      
+      
+     
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kayıt Yap</button>
+      </form>
+      </div>
+      
+      
+    

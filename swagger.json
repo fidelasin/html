@@ -1,0 +1,1818 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Title of API",
+    "description": "Description of API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "API",
+      "description": "API for Users"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your bearer token in the format **Bearer &lt;token>**"
+    }
+  },
+  
+  "paths": {
+   
+
+    
+    "/api/v1/woo/product/createattributes": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Woo"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+     
+                  "attributes": {
+                    "type": "array",
+                    "minLength": 0,
+                    "title": "attributes",
+                    "example":["str1", "str2", "str3"]
+                }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+              { 
+                
+                "mesaj": "basarili"
+              }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+    
+    "/api/v1/woo/product/createcategory": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Woo"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+     
+                  "category": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "category",
+                    "example":"category"
+                },
+                "images": {
+                  "type": "string",
+                  "minLength": 0,
+                  "title": "images",
+                  "example":"images"
+              }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+              { 
+                
+                "mesaj": "basarili"
+              }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+
+    
+    
+    "/api/v1/woo/product/send/{productid}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Woo"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "productid",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+
+  "/api/v1/woo/product/delete/{productid}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Woo"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "productid",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+      
+    "/api/v1/woo/product/add/{productid}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Woo"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "productid",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+          
+    "/api/v1/order/ordercancel/{orderid}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Orders"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "orderid",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+            
+    "/api/v1/order/get/{orderid}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Orders"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "orderid",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+
+    "/api/v1/order/getall": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Orders"
+        ],
+        "summary": "", 
+     
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                {
+                  "_id": "636949bee38646bec31d843d",
+                  "name": "string",
+                  "surname": "5",
+                  "email": "fidelasin@hotmail.com",
+                  "password": "123",
+                  "telefon": "123123",
+                  "role": "admin",
+                  "token": "mj9DLryrN8YDgStr1zchN4P3P9mUysvgREtTAMl4iEUVekwn7TKiy7y3PI1U2gEi",
+                  "password_link": "",
+                  "status": true,
+                  "date": "2022-11-07T18:09:02.562Z",
+                  "__v": 0,
+                  "bearertoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtdXVpZCI6IjYzNjk0OWJlZTM4NjQ2YmVjMzFkODQzZCIsIm1lbWFpbCI6ImZpZGVsYXNpbkBob3RtYWlsLmNvbSIsIm10ZWxlZm9uIjoiMTIzMTIzIiwiaWF0IjoxNjY4ODk2NDIwLCJleHAiOjE3MDA0MzI0MjB9.6NyJEoJ91ejbNk7ZD_wkT4Pz5DomrVkgqujeTubqzFA",
+                  "symbol": [
+                    {
+                      "symbol": "EMWPF",
+                      "exchange": "OTC"
+                    }
+                  ],
+                  "exchange": [
+                    "NASDAQ"
+                  ],
+                  "wallet": [
+                    {
+                      "symbol": "IP",
+                      "quanty": "1",
+                      "price": "1"
+                    }
+                  ]
+                }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+    "/api/v1/order/create": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Orders"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                  "ean":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "price",
+                    "example":"5.2"
+                  },
+                  "price": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "price",
+                    "example":"5.2"
+                  },
+                  "piece": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "piece",
+                    "example":1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "name",
+                    "example":"name"
+                  },
+                  "address": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "address",
+                    "example":"address"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "phone",
+                    "example":"phone"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+            {
+              "title": "title"
+             
+            }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+    
+    "/api/v1/order/edit": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "Orders"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                  "customerbearer": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "customerbearer",
+                    "example":"customerbearer"
+                  },
+                  "order":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "order",
+                    "example":"order"
+                  },
+                  "name":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "name",
+                    "example":"name"
+                  },
+                  "address":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "address",
+                    "example":"address"
+                  },
+                  "phone":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "phone",
+                    "example":"phone"
+                  },
+                  "ean": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "ean",
+                    "example":"ean"
+                  },
+                  "customerprice": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "price",
+                    "example":"5.2"
+                  },
+                  "customerpiece": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "piece",
+                    "example":1
+                  },
+                 
+                  "price": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "price",
+                    "example":"price"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "id",
+                    "example":"id"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+            {
+              "title": "title"
+             
+            }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+
+    
+    "/api/v1/products/getall": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "products"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "search[value]",
+            "in": "query",
+            "description": "search[value]",
+            "required": false,
+            "type": "string",
+			      "examples": "arama"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "required": false,
+            "type": "integer",
+			"examples": 0,
+            "format": "int32"
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "required": false,
+            "type": "integer",
+			"examples": 10,
+            "format": "int32"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+
+        
+    "/api/v1/products/getStock/{ean}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "products"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "ean",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+
+    "/api/v1/products/get/{ean}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "products"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "ean",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+
+    "/api/v1/products/delete/{ean}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "products"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "ean",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+
+
+    "/api/v1/products/add": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "products"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "title",
+                    "example":"title"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "description",
+                    "example":"description"
+                  },
+                  "brand": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "brand",
+                    "example":"brand"
+                  },
+                  "weight": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "weight",
+                    "example":"weight"
+                  },
+                  "itemModelNumber": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "itemModelNumber",
+                    "example":"itemModelNumber"
+                  },
+                  "size": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "size",
+                    "example":"size"
+                  },
+                  "numberOfİtem": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "numberOfİtem",
+                    "example":"numberOfİtem"
+                  },
+                  "quantity": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "quantity",
+                    "example":"quantity"
+                  },
+                  "price": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "price",
+                    "example":"price"
+                  },
+                  "batteriesRequired": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "batteriesRequired",
+                    "example":"batteriesRequired"
+                  },
+                  "itemWeight": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "itemWeight",
+                    "example":"itemWeight"
+                  },
+                  "gtin": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "gtin",
+                    "example":"gtin"
+                  },
+                  "ean": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "ean",
+                    "example":"ean"
+                  },
+                  "added": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "added",
+                    "example":"added"
+                  },
+                  "stock": {
+                    "type": "number",
+                    "minLength": 0,
+                    "title": "stock",
+                    "example":5
+                  },
+                  "color": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "color",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "productDimensions": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "productDimensions",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "material": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "material",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "type": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "type",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "pictures": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "pictures",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "video": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "video",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "status": {
+                    "type": "Boolean",
+                    "minLength": 0,
+                    "title": "status",
+                    "example":"status"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+            {
+              "title": "title",
+              "description": "description",
+              "brand": "brand",
+              "weight": "weight",
+              "itemModelNumber": "itemModelNumber",
+              "size": "size",
+              "numberOfİtem": "numberOfİtem",
+              "quantity": "quantity",
+              "batteriesRequired": "batteriesRequired",
+              "itemWeight": "itemWeight",
+              "gtin": "gtin",
+              "ean": "6",
+              "added": "added",
+              "stock": 4,
+              "color": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "productDimensions": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "material": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "type": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "pictures": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "video": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "status": true,
+              "_id": "63c06199ad2b7fbcac63a32e",
+              "date": "2023-01-12T19:38:01.429Z",
+              "__v": 0
+            }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+  
+    "/api/v1/products/edit": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "products"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "title",
+                    "example":"title"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "description",
+                    "example":"description"
+                  },
+                  "brand": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "brand",
+                    "example":"brand"
+                  },
+                  "weight": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "weight",
+                    "example":"weight"
+                  },
+                  "itemModelNumber": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "itemModelNumber",
+                    "example":"itemModelNumber"
+                  },
+                  "size": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "size",
+                    "example":"size"
+                  },
+                  "numberOfİtem": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "numberOfİtem",
+                    "example":"numberOfİtem"
+                  },
+                  "quantity": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "quantity",
+                    "example":"quantity"
+                  },
+                  "price": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "price",
+                    "example":"price"
+                  },
+                  "batteriesRequired": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "batteriesRequired",
+                    "example":"batteriesRequired"
+                  },
+                  "itemWeight": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "itemWeight",
+                    "example":"itemWeight"
+                  },
+                  "gtin": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "gtin",
+                    "example":"gtin"
+                  },
+                  "ean": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "ean",
+                    "example":"ean"
+                  },
+                  "added": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "added",
+                    "example":"added"
+                  },
+                  "stock": {
+                    "type": "number",
+                    "minLength": 0,
+                    "title": "stock",
+                    "example":5
+                  },
+                  "color": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "color",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "productDimensions": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "productDimensions",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "material": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "material",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "type": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "type",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "pictures": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "pictures",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "video": {
+                    "type": "Array",
+                    "minLength": 0,
+                    "title": "video",
+                    "example":["str1", "str2", "str3"]
+                  },
+                  "status": {
+                    "type": "Boolean",
+                    "minLength": 0,
+                    "title": "status",
+                    "example":"status"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+            {
+              "title": "title",
+              "description": "description",
+              "brand": "brand",
+              "weight": "weight",
+              "itemModelNumber": "itemModelNumber",
+              "size": "size",
+              "numberOfİtem": "numberOfİtem",
+              "quantity": "quantity",
+              "batteriesRequired": "batteriesRequired",
+              "itemWeight": "itemWeight",
+              "gtin": "gtin",
+              "ean": "6",
+              "added": "added",
+              "stock": 4,
+              "color": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "productDimensions": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "material": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "type": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "pictures": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "video": [
+                "str1",
+                "str2",
+                "str3"
+              ],
+              "status": true,
+              "_id": "63c06199ad2b7fbcac63a32e",
+              "date": "2023-01-12T19:38:01.429Z",
+              "__v": 0
+            }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+      
+    "/api/v1/userlogin/": {
+
+
+      "post": {
+
+        "tags": [
+          "User"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+              "telefon": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "telefon",
+                    "example":"AAPL"
+                },
+              "password": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "password",
+                    "example":"NASDAQ"
+                }
+      
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+ 
+
+    
+    
+    "/api/v1/sorusortek": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "sorusortek"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                  "sorukodu": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "sorukodu",
+                    "example":"sorukodu"
+                },
+                "soru": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "soru",
+                    "example":"Bana bir ürün tanıtımı yapabilirmisin urun:yüzük ,ayar:14K ,tur:GOLD, rengi:WHITE-ROSE, boyutu: 4.30, karatı:0.15, ağırlığı:3.45 ve 2.89"}
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+              { 
+                
+                "mesaj": "basarili"
+              }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+    
+ 
+
+    "/api/v1/sorusor": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "sorusor"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+     
+                  "sorukodu": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "sorukodu",
+                    "example":"sorukodu"
+                },
+                "soru": {
+                  "type": "string",
+                  "minLength": 0,
+                  "title": "soru",
+                  "example":"sorunuz"
+              }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+              { 
+                
+                "mesaj": "basarili"
+              }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+    
+
+    
+    "/api/v1/user/edit": {
+
+
+      "post": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "User"
+        ],
+        "summary": "", 
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                  "customerbearer": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "customerbearer",
+                    "example":"customerbearer"
+                  },
+                  
+                  "name":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "name",
+                    "example":"name"
+                  },
+                  "surname":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "surname",
+                    "example":"surname"
+                  },
+                  "email":{
+                    "required": true,
+                    "description": "The id of the pet to retrieve",
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "email",
+                    "example":"email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "password",
+                    "example":"password"
+                  },
+                  "telefon": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "telefon",
+                    "example":"telefon"
+                  },
+                  "role": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "role",
+                    "example":"role"
+                  },
+                 
+                  "token": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "token",
+                    "example":"token"
+                  },
+                  "status": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "status",
+                    "example":"status"
+                  }
+                  ,
+                  "date": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "date",
+                    "example":"date"
+                  }
+                  ,
+                  "bearertoken": {
+                    "type": "string",
+                    "minLength": 0,
+                    "title": "bearertoken",
+                    "example":"bearertoken"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+            {"application/json": 
+            {
+              "title": "title"
+             
+            }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+    "/api/v1/user/get/{id}": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "User"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "type": "string"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                  { 
+                    "name": "ean"
+                  }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+  
+    "/api/v1/userget/allsite": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "User"
+        ],
+        "summary": "", 
+        "parameters": [
+          {
+            "name": "search[value]",
+            "in": "query",
+            "description": "search[value]",
+            "required": false,
+            "type": "string",
+			      "examples": "arama"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "required": false,
+            "type": "integer",
+			"examples": 0,
+            "format": "int32"
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "required": false,
+            "type": "integer",
+			"examples": 10,
+            "format": "int32"
+          }
+        ],
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                {
+                  "_id": "636949bee38646bec31d843d",
+                  "name": "string",
+                  "surname": "5",
+                  "email": "fidelasin@hotmail.com",
+                  "password": "123",
+                  "telefon": "123123",
+                  "role": "admin",
+                  "token": "mj9DLryrN8YDgStr1zchN4P3P9mUysvgREtTAMl4iEUVekwn7TKiy7y3PI1U2gEi",
+                  "password_link": "",
+                  "status": true,
+                  "date": "2022-11-07T18:09:02.562Z",
+                  "__v": 0,
+                  "bearertoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtdXVpZCI6IjYzNjk0OWJlZTM4NjQ2YmVjMzFkODQzZCIsIm1lbWFpbCI6ImZpZGVsYXNpbkBob3RtYWlsLmNvbSIsIm10ZWxlZm9uIjoiMTIzMTIzIiwiaWF0IjoxNjY4ODk2NDIwLCJleHAiOjE3MDA0MzI0MjB9.6NyJEoJ91ejbNk7ZD_wkT4Pz5DomrVkgqujeTubqzFA",
+                  "symbol": [
+                    {
+                      "symbol": "EMWPF",
+                      "exchange": "OTC"
+                    }
+                  ],
+                  "exchange": [
+                    "NASDAQ"
+                  ],
+                  "wallet": [
+                    {
+                      "symbol": "IP",
+                      "quanty": "1",
+                      "price": "1"
+                    }
+                  ]
+                }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+
+    "/api/v1/userget/all": {
+
+      "get": {
+        "security": [{ "Bearer": [] }],
+
+        "tags": [
+          "User"
+        ],
+        "summary": "", 
+     
+       
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":
+                {"application/json": 
+                {
+                  "_id": "636949bee38646bec31d843d",
+                  "name": "string",
+                  "surname": "5",
+                  "email": "fidelasin@hotmail.com",
+                  "password": "123",
+                  "telefon": "123123",
+                  "role": "admin",
+                  "token": "mj9DLryrN8YDgStr1zchN4P3P9mUysvgREtTAMl4iEUVekwn7TKiy7y3PI1U2gEi",
+                  "password_link": "",
+                  "status": true,
+                  "date": "2022-11-07T18:09:02.562Z",
+                  "__v": 0,
+                  "bearertoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtdXVpZCI6IjYzNjk0OWJlZTM4NjQ2YmVjMzFkODQzZCIsIm1lbWFpbCI6ImZpZGVsYXNpbkBob3RtYWlsLmNvbSIsIm10ZWxlZm9uIjoiMTIzMTIzIiwiaWF0IjoxNjY4ODk2NDIwLCJleHAiOjE3MDA0MzI0MjB9.6NyJEoJ91ejbNk7ZD_wkT4Pz5DomrVkgqujeTubqzFA",
+                  "symbol": [
+                    {
+                      "symbol": "EMWPF",
+                      "exchange": "OTC"
+                    }
+                  ],
+                  "exchange": [
+                    "NASDAQ"
+                  ],
+                  "wallet": [
+                    {
+                      "symbol": "IP",
+                      "quanty": "1",
+                      "price": "1"
+                    }
+                  ]
+                }
+                }
+            
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+
+    "/api/v1/signup": {
+      "post": {
+        "tags": [
+          "kayit"
+        ],
+        "summary": "Kayıt Etme",
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "name"
+                    },
+                    "surname": {
+                      "type": "string",
+                      "minLength": 1,
+                      "title": "surname",
+                      "example":5
+                  },
+                 
+                "password": {
+                  "type": "string",
+                  "minLength": 0,
+                  "title": "password",
+                  "example":"AAPL"
+              },
+              "telefon": {
+                "type": "string",
+                "minLength": 0,
+                "title": "telefon",
+                "example":"AAPL"
+            },
+            "email": {
+              "type": "string",
+              "minLength": 0,
+              "title": "email",
+              "example":"AAPL"
+          }
+      
+                },
+                "additionalProperties": false,
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/api/v1/verifity": {
+      "post": {
+        "tags": [
+          "kayit"
+        ],
+        "summary": "Mail dogrulama",
+     
+        "parameters": [
+          {
+              "in": "body",
+              "name": "body",
+              "description": "Authentication",
+              "required": true,
+              "schema": {
+                "type": "object",
+                 "properties": {
+                    "verifity": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "verifity"
+                    }
+      
+                },
+                "additionalProperties": false
+            }
+          }
+      ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    }
+
+
+  }
+}
